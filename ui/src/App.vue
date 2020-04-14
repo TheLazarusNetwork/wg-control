@@ -2,8 +2,8 @@
   <v-app id="inspire">
 
     <v-app-bar app>
-      <img class="mr-3" :src="require('./assets/logo.png')" height="50" alt="Wg Gen Web"/>
-      <v-toolbar-title to="/">Wg Gen Web</v-toolbar-title>
+      <img class="mr-3" :src="require('./assets/logo.png')" height="50" alt="WireGuard Control"/>
+      <v-toolbar-title to="/">WireGuard Control</v-toolbar-title>
 
       <v-spacer />
 
@@ -31,8 +31,7 @@
       <v-row justify="start" no-gutters>
         <v-col cols="12" lg="6" md="12" sm="12">
           <div :align="$vuetify.breakpoint.smAndDown ? 'center' : 'left'">
-            <small>Copyright &copy; {{ new Date().getFullYear() }}, Wg Gen Web.</small>
-            <small>This work is licensed under a <a class="pr-1 pl-1" href="http://www.wtfpl.net/" target="_blank">WTFPL License.</a></small>
+            <small>Copyright &copy {{ new Date().getFullYear() }} | Lazarus Network</small>
           </div>
         </v-col>
       </v-row>
@@ -40,8 +39,8 @@
         <v-col cols="12" lg="6" md="12" sm="12">
           <div :align="$vuetify.breakpoint.smAndDown ? 'center' : 'right'">
             <small>Created with</small>
-            <v-icon class="pr-1 pl-1">mdi-heart</v-icon><span>by</span><a class="pr-2 pl-1" href="mailto:vx3r@127-0-0-1.fr">vx3r</a>
-            <a :href="'https://github.com/vx3r/wg-gen-web/commit/' + version"><kbd>Version: {{ version.substring(0,7) }}</kbd></a>
+            <v-icon class="pr-1 pl-1">mdi-heart</v-icon><span>using</span><a class="pr-2 pl-1" href="mailto:connect@lazarus.network">GoLang & Vue.js</a>
+            <a :href="'https://github.com/TheLazarusNetwork/'"><kbd>Version: {{ version.substring(0,7) }}</kbd></a>
           </div>
         </v-col>
       </v-row>

@@ -1,14 +1,15 @@
 package api
 
 import (
+	"net/http"
+
+	"github.com/TheLazarusNetwork/wg-control/core"
+	"github.com/TheLazarusNetwork/wg-control/model"
+	"github.com/TheLazarusNetwork/wg-control/template"
+	"github.com/TheLazarusNetwork/wg-control/util"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"github.com/skip2/go-qrcode"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/core"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/model"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/template"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/util"
-	"net/http"
 )
 
 // ApplyRoutes applies router to gin Router

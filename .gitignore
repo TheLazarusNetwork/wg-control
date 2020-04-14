@@ -14,7 +14,12 @@ ui/dist/*
 ui/node_modules
 /dist
 
+/keys
+wg0.conf
+server.json
+
 # local env files
+.env
 ui/.env.local
 ui/.env.*.local
 

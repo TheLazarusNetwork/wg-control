@@ -2,12 +2,13 @@ package template
 
 import (
 	"bytes"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/model"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/util"
 	"os"
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	"github.com/TheLazarusNetwork/wg-control/model"
+	"github.com/TheLazarusNetwork/wg-control/util"
 )
 
 var (
@@ -33,7 +34,7 @@ var (
     <!--[if !mso]><!-->
     <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,700,700i" rel="stylesheet" />
     <!--<![endif]-->
-    <title>Email Template</title>
+    <title>Email Configuration</title>
     <!--[if gte mso 9]>
     <style type="text/css" media="all">
         sup { font-size: 100% !important; }
@@ -177,10 +178,10 @@ var (
                                 <td class="p30-15 bbrr" style="padding: 50px 30px; border-radius:0px 0px 26px 26px;" bgcolor="#0e264b">
                                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                         <tr>
-                                            <td class="text-footer1 pb10" style="color:#c1cddc; font-family:'Muli', Arial,sans-serif; font-size:16px; line-height:20px; text-align:center; padding-bottom:10px;">Wg Gen Web - Simple Web based configuration generator for WireGuard</td>
+                                            <td class="text-footer1 pb10" style="color:#c1cddc; font-family:'Muli', Arial,sans-serif; font-size:16px; line-height:20px; text-align:center; padding-bottom:10px;">WireGuardControl - Web & API based configuration management for WireGuard VPN</td>
                                         </tr>
                                         <tr>
-                                            <td class="text-footer2" style="color:#8297b3; font-family:'Muli', Arial,sans-serif; font-size:12px; line-height:26px; text-align:center;"><a href="https://github.com/vx3r/wg-gen-web" target="_blank" class="link" style="color:#66c7ff; text-decoration:none;"><span class="link" style="color:#66c7ff; text-decoration:none;">More info on Github</span></a></td>
+                                            <td class="text-footer2" style="color:#8297b3; font-family:'Muli', Arial,sans-serif; font-size:12px; line-height:26px; text-align:center;"><a href="https://Lazarus.Network" target="_blank" class="link" style="color:#66c7ff; text-decoration:none;"><span class="link" style="color:#66c7ff; text-decoration:none;">More info on Website</span></a></td>
                                         </tr>
                                     </table>
                                 </td>

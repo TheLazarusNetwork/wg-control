@@ -2,10 +2,11 @@ package storage
 
 import (
 	"encoding/json"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/model"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/util"
 	"os"
 	"path/filepath"
+
+	"github.com/TheLazarusNetwork/wg-control/model"
+	"github.com/TheLazarusNetwork/wg-control/util"
 )
 
 // Serialize write interface to disk
@@ -15,12 +16,21 @@ func Serialize(id string, c interface{}) error {
 		return err
 	}
 
-	return util.WriteFile(filepath.Join(os.Getenv("WG_CONF_DIR"), id), b)
+	if id == "server.json" {
+		return util.WriteFile(filepath.Join(os.Getenv("WG_CONF_DIR"), id), b)
+	} else {
+		return util.WriteFile(filepath.Join(os.Getenv("WG_KEYS_DIR"), id), b)
+	}
 }
 
 // Deserialize read interface from disk
 func Deserialize(id string) (interface{}, error) {
-	path := filepath.Join(os.Getenv("WG_CONF_DIR"), id)
+	var path string
+	if id == "server.json" {
+		path = filepath.Join(os.Getenv("WG_CONF_DIR"), id)
+	} else {
+		path = filepath.Join(os.Getenv("WG_KEYS_DIR"), id)
+	}
 
 	data, err := util.ReadFile(path)
 	if err != nil {

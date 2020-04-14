@@ -1,10 +1,10 @@
-ARG COMMIT="N/A"
+ARG COMMIT="0.0.1"
 
 FROM golang:alpine AS build-back
 WORKDIR /app
 ARG COMMIT
 COPY . .
-RUN go build -ldflags="-X 'gitlab.127-0-0-1.fr/vx3r/wg-gen-web/util.Version=${COMMIT}'" -o wg-gen-web-linux
+RUN go build -ldflags="-X 'github.com/TheLazarusNetwork/wg-control/util.Version=${COMMIT}'" -o wg-control-linux
 
 FROM node:10-alpine AS build-front
 WORKDIR /app
@@ -15,11 +15,11 @@ RUN npm run build
 
 FROM alpine
 WORKDIR /app
-COPY --from=build-back /app/wg-gen-web-linux .
+COPY --from=build-back /app/wg-control-linux .
 COPY --from=build-front /app/dist ./ui/dist
 COPY .env .
-RUN chmod +x ./wg-gen-web-linux
+RUN chmod +x ./wg-control-linux
 RUN apk add --no-cache ca-certificates
-EXPOSE 8080
+EXPOSE 9080
 
-CMD ["/app/wg-gen-web-linux"]
+CMD ["/app/wg-control-linux"]

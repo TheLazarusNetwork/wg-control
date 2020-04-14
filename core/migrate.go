@@ -2,19 +2,20 @@ package core
 
 import (
 	"encoding/json"
-	uuid "github.com/satori/go.uuid"
-	log "github.com/sirupsen/logrus"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/model"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/storage"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/util"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
+
+	"github.com/TheLazarusNetwork/wg-control/model"
+	"github.com/TheLazarusNetwork/wg-control/storage"
+	"github.com/TheLazarusNetwork/wg-control/util"
+	uuid "github.com/satori/go.uuid"
+	log "github.com/sirupsen/logrus"
 )
 
-// Migrate all changes, current struct fields change
+// MigrateInitialStructChange Migrate all changes, current struct fields change
 func MigrateInitialStructChange() error {
 	clients, err := readClients()
 	if err != nil {
@@ -144,7 +145,7 @@ func MigrateInitialStructChange() error {
 	return nil
 }
 
-// Migrate presharedKey issue #23
+// MigratePresharedKey issue #23
 func MigratePresharedKey() error {
 	clients, err := readClients()
 	if err != nil {

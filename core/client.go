@@ -2,21 +2,22 @@ package core
 
 import (
 	"errors"
-	uuid "github.com/satori/go.uuid"
-	log "github.com/sirupsen/logrus"
-	"github.com/skip2/go-qrcode"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/model"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/storage"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/template"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/util"
-	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
-	"gopkg.in/gomail.v2"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sort"
 	"strconv"
 	"time"
+
+	"github.com/TheLazarusNetwork/wg-control/model"
+	"github.com/TheLazarusNetwork/wg-control/storage"
+	"github.com/TheLazarusNetwork/wg-control/template"
+	"github.com/TheLazarusNetwork/wg-control/util"
+	uuid "github.com/satori/go.uuid"
+	log "github.com/sirupsen/logrus"
+	"github.com/skip2/go-qrcode"
+	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
+	"gopkg.in/gomail.v2"
 )
 
 // CreateClient client with all necessary data
@@ -141,7 +142,7 @@ func UpdateClient(Id string, client *model.Client) (*model.Client, error) {
 
 // DeleteClient from disk
 func DeleteClient(id string) error {
-	path := filepath.Join(os.Getenv("WG_CONF_DIR"), id)
+	path := filepath.Join(os.Getenv("WG_KEYS_DIR"), id)
 	err := os.Remove(path)
 	if err != nil {
 		return err
@@ -155,7 +156,7 @@ func DeleteClient(id string) error {
 func ReadClients() ([]*model.Client, error) {
 	clients := make([]*model.Client, 0)
 
-	files, err := ioutil.ReadDir(filepath.Join(os.Getenv("WG_CONF_DIR")))
+	files, err := ioutil.ReadDir(filepath.Join(os.Getenv("WG_KEYS_DIR")))
 	if err != nil {
 		return nil, err
 	}
@@ -203,7 +204,7 @@ func ReadClientConfig(id string) ([]byte, error) {
 	return configDataWg, nil
 }
 
-// SendEmail to client
+// EmailClient SendEmail to client
 func EmailClient(id string) error {
 	client, err := ReadClient(id)
 	if err != nil {

@@ -2,17 +2,18 @@ package main
 
 import (
 	"fmt"
-	"github.com/danielkov/gin-helmet"
+	"os"
+	"path/filepath"
+
+	"github.com/TheLazarusNetwork/wg-control/api"
+	"github.com/TheLazarusNetwork/wg-control/core"
+	"github.com/TheLazarusNetwork/wg-control/util"
+	helmet "github.com/danielkov/gin-helmet"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	log "github.com/sirupsen/logrus"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/api"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/core"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/util"
-	"os"
-	"path/filepath"
 )
 
 func init() {
@@ -22,7 +23,7 @@ func init() {
 }
 
 func main() {
-	log.Infof("Starting Wg Gen Web version: %s", util.Version)
+	log.Infof("Starting WireGuard Control version: %s", util.Version)
 
 	// load .env environment variables
 	err := godotenv.Load()
@@ -88,28 +89,28 @@ func main() {
 	}
 
 	// creates a gin router with default middleware: logger and recovery (crash-free) middleware
-	app := gin.Default()
+	ginApp := gin.Default()
 
 	// cors middleware
 	config := cors.DefaultConfig()
 	config.AllowAllOrigins = true
-	app.Use(cors.New(config))
+	ginApp.Use(cors.New(config))
 
 	// protection middleware
-	app.Use(helmet.Default())
+	ginApp.Use(helmet.Default())
 
 	// no route redirect to frontend app
-	app.NoRoute(func(c *gin.Context) {
+	ginApp.NoRoute(func(c *gin.Context) {
 		c.Redirect(301, "/index.html")
 	})
 
 	// serve static files
-	app.Use(static.Serve("/", static.LocalFile("./ui/dist", false)))
+	ginApp.Use(static.Serve("/", static.LocalFile("./ui/dist", false)))
 
 	// apply api router
-	api.ApplyRoutes(app)
+	api.ApplyRoutes(ginApp)
 
-	err = app.Run(fmt.Sprintf("%s:%s", os.Getenv("SERVER"), os.Getenv("PORT")))
+	err = ginApp.Run(fmt.Sprintf("%s:%s", os.Getenv("SERVER"), os.Getenv("PORT")))
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,

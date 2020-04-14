@@ -2,15 +2,16 @@ package core
 
 import (
 	"errors"
-	log "github.com/sirupsen/logrus"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/model"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/storage"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/template"
-	"gitlab.127-0-0-1.fr/vx3r/wg-gen-web/util"
-	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/TheLazarusNetwork/wg-control/model"
+	"github.com/TheLazarusNetwork/wg-control/storage"
+	"github.com/TheLazarusNetwork/wg-control/template"
+	"github.com/TheLazarusNetwork/wg-control/util"
+	log "github.com/sirupsen/logrus"
+	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 )
 
 // ReadServer object, create default one
@@ -25,23 +26,21 @@ func ReadServer() (*model.Server, error) {
 		server.PrivateKey = key.String()
 		server.PublicKey = key.PublicKey().String()
 
-		server.Endpoint = "wireguard.example.com:123"
+		server.Endpoint = os.Getenv("WG_DOMAIN")
 		server.ListenPort = 51820
 
 		server.Address = make([]string, 0)
-		server.Address = append(server.Address, "fd9f:6666::10:6:6:1/64")
-		server.Address = append(server.Address, "10.6.6.1/24")
+		server.Address = append(server.Address, "10.0.0.1/24")
 
 		server.Dns = make([]string, 0)
-		server.Dns = append(server.Dns, "fd9f::10:0:0:2")
-		server.Dns = append(server.Dns, "10.0.0.2")
+		server.Dns = append(server.Dns, "1.1.1.1")
 
 		server.PersistentKeepalive = 16
 		server.Mtu = 0
 		server.PreUp = "echo WireGuard PreUp"
-		server.PostUp = "echo WireGuard PostUp"
+		server.PostUp = "iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE"
 		server.PreDown = "echo WireGuard PreDown"
-		server.PostDown = "echo WireGuard PostDown"
+		server.PostDown = "iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE"
 		server.Created = time.Now().UTC()
 		server.Updated = server.Created
 

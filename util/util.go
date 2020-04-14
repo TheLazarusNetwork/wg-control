@@ -9,9 +9,10 @@ import (
 )
 
 var (
+	// RegexpEmail RegEx
 	RegexpEmail = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
-	// pushed build time
-	Version string
+	// Version pushed build time
+	Version = "1.0.0"
 )
 
 // ReadFile file content
