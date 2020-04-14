@@ -13,7 +13,7 @@ import (
 	"github.com/TheLazarusNetwork/wg-control/storage"
 	"github.com/TheLazarusNetwork/wg-control/template"
 	"github.com/TheLazarusNetwork/wg-control/util"
-	uuid "github.com/satori/go.uuid"
+	uuid "github.com/google/uuid"
 	log "github.com/sirupsen/logrus"
 	"github.com/skip2/go-qrcode"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
@@ -33,7 +33,10 @@ func CreateClient(client *model.Client) (*model.Client, error) {
 		return nil, errors.New("failed to validate client")
 	}
 
-	u := uuid.NewV4()
+	u, err := uuid.NewRandom()
+	if err != nil {
+		return nil, err
+	}
 	client.Id = u.String()
 
 	key, err := wgtypes.GeneratePrivateKey()
@@ -163,7 +166,7 @@ func ReadClients() ([]*model.Client, error) {
 
 	for _, f := range files {
 		// clients file name is an uuid
-		_, err := uuid.FromString(f.Name())
+		_, err := uuid.Parse(f.Name())
 		if err == nil {
 			c, err := storage.Deserialize(f.Name())
 			if err != nil {
