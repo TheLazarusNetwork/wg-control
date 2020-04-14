@@ -41,7 +41,7 @@ func ReadServer() (*model.Server, error) {
 		server.PostUp = "iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE"
 		server.PreDown = "echo WireGuard PreDown"
 		server.PostDown = "iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE"
-		server.SaveConfig = true
+		server.SaveConfig = false
 		server.Created = time.Now().UTC()
 		server.Updated = server.Created
 
