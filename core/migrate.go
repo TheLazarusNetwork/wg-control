@@ -11,7 +11,7 @@ import (
 	"github.com/TheLazarusNetwork/wg-control/model"
 	"github.com/TheLazarusNetwork/wg-control/storage"
 	"github.com/TheLazarusNetwork/wg-control/util"
-	uuid "github.com/satori/go.uuid"
+	uuid "github.com/google/uuid"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -275,7 +275,7 @@ func readClients() ([]map[string]interface{}, error) {
 
 	for _, f := range files {
 		// clients file name is an uuid
-		_, err := uuid.FromString(f.Name())
+		_, err := uuid.Parse(f.Name())
 		if err == nil {
 			c, err := deserialize(f.Name())
 			if err != nil {
