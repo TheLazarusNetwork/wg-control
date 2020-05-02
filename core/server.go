@@ -33,7 +33,7 @@ func ReadServer() (*model.Server, error) {
 		server.Address = append(server.Address, "10.0.0.1/24")
 
 		server.Dns = make([]string, 0)
-		server.Dns = append(server.Dns, "1.1.1.1")
+		server.Dns = append(server.Dns, os.Getenv("WG_DNS"))
 
 		server.PersistentKeepalive = 16
 		server.Mtu = 0
