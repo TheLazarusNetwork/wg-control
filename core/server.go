@@ -30,7 +30,7 @@ func ReadServer() (*model.Server, error) {
 		server.ListenPort = 51820
 
 		server.Address = make([]string, 0)
-		server.Address = append(server.Address, "10.0.0.1/24")
+		server.Address = append(server.Address, os.Getenv("WG_IP_SUBNET"))
 
 		server.Dns = make([]string, 0)
 		server.Dns = append(server.Dns, os.Getenv("WG_DNS"))
